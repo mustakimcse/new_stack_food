@@ -1,0 +1,13 @@
+[33m963513e[m[33m ([m[1;36mHEAD[m[33m)[m HEAD@{0}: commit: some update in bottom
+[33m001d297[m[33m ([m[1;31morigin/mustakim[m[33m)[m HEAD@{1}: rebase (start): checkout origin/mustakim
+[33mef12145[m[33m ([m[1;32mmustakim[m[33m)[m HEAD@{2}: commit: some update in bottom
+[33m3ba610b[m HEAD@{3}: commit (amend): some update
+[33m001d297[m[33m ([m[1;31morigin/mustakim[m[33m)[m HEAD@{4}: commit: some update
+[33m6f209c8[m HEAD@{5}: checkout: moving from main to mustakim
+[33m435065d[m[33m ([m[1;32mmain[m[33m)[m HEAD@{6}: checkout: moving from mustakim to main
+[33m435065d[m[33m ([m[1;32mmain[m[33m)[m HEAD@{7}: checkout: moving from main to mustakim
+[33m435065d[m[33m ([m[1;32mmain[m[33m)[m HEAD@{8}: commit (amend): some update
+[33m6f209c8[m HEAD@{9}: commit: bottom and home screen
+[33m4cf6bf2[m HEAD@{10}: commit: login screen
+[33m66c1308[m HEAD@{11}: Branch: renamed refs/heads/master to refs/heads/main
+[33m66c1308[m HEAD@{13}: commit (initial): first commit
