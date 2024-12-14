@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
+import '../../controller/cart_controller.dart';
 import '../../model/product_model.dart';
 import '../../model/restaurants_model.dart';
 import '../../widgets/product_widget.dart';
@@ -14,10 +17,11 @@ class FReviewsScreen extends StatefulWidget {
 }
 
 class _FReviewsScreenState extends State<FReviewsScreen> {
+  final cardController=Get.put(CartController());
   // Sample data for restaurants
   final List<ProductModel> product = [
     ProductModel(
-      id: 1,
+      id: 5,
       name: "Gourmet Kitchen",
       subName: 'Hungry Puppets',
       foodImage: "assets/food/res7.png",
@@ -26,7 +30,7 @@ class _FReviewsScreenState extends State<FReviewsScreen> {
       currentPrice: 150,
     ),
     ProductModel(
-      id: 2,
+      id: 6,
       name: "Foodie's Delight",
       subName: "Hungry Puppets",
       foodImage: "assets/food/res8.png",
@@ -37,7 +41,7 @@ class _FReviewsScreenState extends State<FReviewsScreen> {
     ),
 
     ProductModel(
-      id: 1,
+      id: 7,
       name: "Gourmet Kitchen",
       subName: 'Hungry Puppets',
       foodImage: "assets/food/res9.png",
@@ -46,7 +50,7 @@ class _FReviewsScreenState extends State<FReviewsScreen> {
       currentPrice: 150,
     ),
     ProductModel(
-      id: 2,
+      id: 8,
       name: "Foodie's Delight",
       subName: "Hungry Puppets",
       foodImage: "assets/food/res10.png",
@@ -78,7 +82,14 @@ class _FReviewsScreenState extends State<FReviewsScreen> {
                   foodImage: restaurant.foodImage,
                   RestImage: restaurant.restImage,
                   leftTime: restaurant.time,
-
+                  onAddToCart: (){
+                    cardController.addToCart(
+                        restaurant.id,
+                        restaurant.name,
+                        restaurant.currentPrice.toDouble(),
+                        restaurant.foodImage
+                    );
+                  },
                   currentPrice: restaurant.currentPrice,
 
                 );
