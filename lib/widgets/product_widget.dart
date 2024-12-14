@@ -13,6 +13,7 @@ class ProductWidget extends StatefulWidget {
   final String RestImage;
   final String leftTime;
   final int currentPrice;
+  final VoidCallback onAddToCart;
 
 
   const ProductWidget({
@@ -24,6 +25,7 @@ class ProductWidget extends StatefulWidget {
     required this.RestImage,
     required this.leftTime,
     required this.currentPrice,
+    required this.onAddToCart
 
   });
 
@@ -104,9 +106,8 @@ class _ProductWidgetState extends State<ProductWidget> {
                               Expanded(
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                
                                   children: [
-                                    Row(
+                                    const Row(
                                       children: [
                                         Text("4.5 ",style: TextStyle(fontSize: 8),),
                                         Icon(Icons.star,color: Colors.orangeAccent,size: 8,),
@@ -125,13 +126,16 @@ class _ProductWidgetState extends State<ProductWidget> {
                             ],
                           ),
                           const Divider(),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Image.asset("assets/icon/shopping-bag1.png"),
-                              SizedBox(width: 5,),
-                              const Text("Add to cart")
-                            ],
+                          InkWell(
+                            onTap: widget.onAddToCart,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset("assets/icon/shopping-bag1.png"),
+                                SizedBox(width: 5,),
+                                const Text("Add to cart")
+                              ],
+                            ),
                           ),
       
       

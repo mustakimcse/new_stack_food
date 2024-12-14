@@ -67,20 +67,20 @@ class CartController extends GetxController {
   }
 
   // Add item to cart or increment quantity if it exists
-  void addToCart(int bookId, String name,pub, double price, double mrp_price, String image) {
+  void addToCart(int bookId, String name, double price,String image) {
     if (cartItems.containsKey(bookId)) {
       cartItems[bookId]!.quantity += 1;
-
+      Get.snackbar('Cart',"Already added to cart");
     } else {
       cartItems[bookId] = CartItem(
         id: bookId,
         name: name,
-        pub: pub,
         price: price,
-        mrp_price: mrp_price,
         image: image,
         quantity: 1,
       );
+
+      Get.snackbar('Cart',"Item has been added to cart");
 
     }
     _saveCart();
@@ -146,6 +146,19 @@ class CartController extends GetxController {
     return cartPayload; // Return the cart payload map
   }
 
+  // Method to delete a single item from the cart
+  void deleteCartItem(int bookId) {
+    if (cartItems.containsKey(bookId)) {
+      cartItems.remove(bookId); // Remove the item from the cart
+      _saveCart(); // Save the updated cart to SharedPreferences
+      _calculateDiscount(); // Recalculate discounts
+      Get.snackbar('Cart', 'Item has been removed from the cart');
+    } else {
+      Get.snackbar('Cart', 'Item not found in the cart');
+    }
+  }
+
+
   void clearCart() async {
     // Clear in-memory cart items
     cartItems.clear();
@@ -160,18 +173,14 @@ class CartController extends GetxController {
 class CartItem {
   final int id;
   final String name;
-  final String pub;
   final double price;
-  final double mrp_price;
   final String image;
   RxInt quantity; // Make quantity reactive
 
   CartItem({
     required this.id,
     required this.name,
-    required this.pub,
     required this.price,
-    required this.mrp_price,
     required this.image,
     required int quantity,  // Initial non-reactive quantity
   }) : quantity = quantity.obs;  // Make it reactive
@@ -179,9 +188,7 @@ class CartItem {
   Map<String, dynamic> toJson() => {
     'id': id,
     'name': name,
-    'pub': name,
     'price': price,
-    'mrp_price': mrp_price,
     'image': image,
     'quantity': quantity.value, // Save raw value
   };
@@ -190,9 +197,7 @@ class CartItem {
     return CartItem(
       id: json['id'],
       name: json['name'],
-      pub: json['pub'],
       price: json['price'],
-      mrp_price: json['mrp_price'] ?? 0.0,
       image: json['image'],
       quantity: json['quantity'], // Set initial quantity
     );

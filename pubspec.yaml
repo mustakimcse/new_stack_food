@@ -81,6 +81,7 @@ flutter:
    - assets/icon/send.png
    - assets/icon/search.png
    - assets/icon/filter.png
+   - assets/icon/method.png
    - assets/icon/bargar.png
    - assets/icon/chats.png
    - assets/icon/rectangle.png

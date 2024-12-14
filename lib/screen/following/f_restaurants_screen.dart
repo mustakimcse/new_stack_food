@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:stack_food/controller/cart_controller.dart';
 
 import '../../model/product_model.dart';
 import '../../model/restaurants_model.dart';
@@ -14,6 +17,8 @@ class FRestaurantsScreen extends StatefulWidget {
 }
 
 class _FRestaurantsScreenState extends State<FRestaurantsScreen> {
+  
+  final cardController=Get.put(CartController());
   // Sample data for restaurants
   final List<ProductModel> product = [
     ProductModel(
@@ -37,7 +42,7 @@ class _FRestaurantsScreenState extends State<FRestaurantsScreen> {
     ),
 
     ProductModel(
-      id: 1,
+      id: 3,
       name: "Gourmet Kitchen",
       subName: 'Hungry Puppets',
       foodImage: "assets/food/res9.png",
@@ -46,7 +51,7 @@ class _FRestaurantsScreenState extends State<FRestaurantsScreen> {
       currentPrice: 150,
     ),
     ProductModel(
-      id: 2,
+      id: 4,
       name: "Foodie's Delight",
       subName: "Hungry Puppets",
       foodImage: "assets/food/res10.png",
@@ -63,6 +68,19 @@ class _FRestaurantsScreenState extends State<FRestaurantsScreen> {
 
       body: CustomScrollView(
         slivers: [
+          SliverToBoxAdapter(
+            child: ElevatedButton(
+                onPressed: (){
+                  cardController.addToCart(
+                      2,
+                      'test food',
+                      12,
+                      "assets/food/res7.png"
+                  );
+                },
+                child: Text("test")
+            ),
+          ),
           SliverGrid(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
@@ -78,6 +96,14 @@ class _FRestaurantsScreenState extends State<FRestaurantsScreen> {
                   foodImage: restaurant.foodImage,
                   RestImage: restaurant.restImage,
                   leftTime: restaurant.time,
+                  onAddToCart: (){
+                    cardController.addToCart(
+                        restaurant.id,
+                        restaurant.name,
+                        restaurant.currentPrice.toDouble(),
+                        restaurant.foodImage
+                    );
+                  },
 
                   currentPrice: restaurant.currentPrice,
 
