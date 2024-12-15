@@ -19,7 +19,7 @@ class CartController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _loadCart();
+    loadCart();
     // _loadDiscountData();
   }
 
@@ -117,7 +117,7 @@ class CartController extends GetxController {
   }
 
   // Load cart data from SharedPreferences
-  Future<void> _loadCart() async {
+  Future<void> loadCart() async {
     final prefs = await SharedPreferences.getInstance();
     final cartString = prefs.getString('cart');
     if (cartString != null) {
