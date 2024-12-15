@@ -15,6 +15,12 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
 
   final cartController = Get.put(CartController());
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -168,148 +174,153 @@ class _CartScreenState extends State<CartScreen> {
               height: 40,
             ),
           ),
-          if(cartController.cartItems.isNotEmpty)
-            SliverToBoxAdapter(
+
+          SliverToBoxAdapter(
             child: Obx((){
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16,right: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Tips",style: TextStyle(fontSize: 18),),
-                        RichText(
-                            text: TextSpan(
-                                text: '\$ 5.50 ',
-                                style: TextStyle(fontSize: 18,color: Colors.black),
-                                children: [
-                                  TextSpan(
-                                      text: "USD",
-                                      style: TextStyle(fontSize:14,color: Color(0xff9896a1,),)
-                                  )
-                                ]
-                            )
-                        )
+              if(cartController.cartItems.isNotEmpty){
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16,right: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Tips",style: TextStyle(fontSize: 18),),
+                          RichText(
+                              text: TextSpan(
+                                  text: '\$ 5.50 ',
+                                  style: TextStyle(fontSize: 18,color: Colors.black),
+                                  children: [
+                                    TextSpan(
+                                        text: "USD",
+                                        style: TextStyle(fontSize:14,color: Color(0xff9896a1,),)
+                                    )
+                                  ]
+                              )
+                          )
 
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16,right: 16,bottom: 10),
-                    child: Divider(),
-                  ),
-
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16,right: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Subtotal",style: TextStyle(fontSize: 18),),
-                        RichText(
-                            text: TextSpan(
-                                text: '\$ ${cartController.totalPrice} ',
-                                style: TextStyle(fontSize: 18,color: Colors.black),
-                                children: [
-                                  TextSpan(
-                                      text: "USD",
-                                      style: TextStyle(fontSize:14,color: Color(0xff9896a1,),)
-                                  )
-                                ]
-                            )
-                        )
-
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16,right: 16,bottom: 10),
+                      child: Divider(),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16,right: 16,bottom: 10),
-                    child: Divider(),
-                  ),
 
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16,right: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Tax and Fees",style: TextStyle(fontSize: 18),),
-                        RichText(
-                            text: TextSpan(
-                                text: '\$ 5.50 ',
-                                style: TextStyle(fontSize: 18,color: Colors.black),
-                                children: [
-                                  TextSpan(
-                                      text: "USD",
-                                      style: TextStyle(fontSize:14,color: Color(0xff9896a1,),)
-                                  )
-                                ]
-                            )
-                        )
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16,right: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Subtotal",style: TextStyle(fontSize: 18),),
+                          RichText(
+                              text: TextSpan(
+                                  text: '\$ ${cartController.totalPrice} ',
+                                  style: TextStyle(fontSize: 18,color: Colors.black),
+                                  children: [
+                                    TextSpan(
+                                        text: "USD",
+                                        style: TextStyle(fontSize:14,color: Color(0xff9896a1,),)
+                                    )
+                                  ]
+                              )
+                          )
 
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16,right: 16,bottom: 10),
-                    child: Divider(),
-                  ),
-
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16,right: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Deoivery",style: TextStyle(fontSize: 18),),
-                        RichText(
-                            text: TextSpan(
-                                text: '\$ 3.50 ',
-                                style: TextStyle(fontSize: 18,color: Colors.black),
-                                children: [
-                                  TextSpan(
-                                      text: "USD",
-                                      style: TextStyle(fontSize:14,color: Color(0xff9896a1,),)
-                                  )
-                                ]
-                            )
-                        )
-
-                      ],
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16,right: 16,bottom: 10),
+                      child: Divider(),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16,right: 16,bottom: 10),
-                    child: Divider(),
-                  ),
 
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16,right: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Total",style: TextStyle(fontSize: 18),),
-                        RichText(
-                            text: TextSpan(
-                                text: '\$ 59.50 ',
-                                style: TextStyle(fontSize: 18,color: Colors.black),
-                                children: [
-                                  TextSpan(
-                                      text: "USD",
-                                      style: TextStyle(fontSize:14,color: Color(0xff9896a1,),)
-                                  )
-                                ]
-                            )
-                        )
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16,right: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Tax and Fees",style: TextStyle(fontSize: 18),),
+                          RichText(
+                              text: TextSpan(
+                                  text: '\$ 5.50 ',
+                                  style: TextStyle(fontSize: 18,color: Colors.black),
+                                  children: [
+                                    TextSpan(
+                                        text: "USD",
+                                        style: TextStyle(fontSize:14,color: Color(0xff9896a1,),)
+                                    )
+                                  ]
+                              )
+                          )
 
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16,right: 16,bottom: 10),
-                    child: Divider(),
-                  ),
-                ],
-              );
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16,right: 16,bottom: 10),
+                      child: Divider(),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16,right: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Deoivery",style: TextStyle(fontSize: 18),),
+                          RichText(
+                              text: TextSpan(
+                                  text: '\$ 3.50 ',
+                                  style: TextStyle(fontSize: 18,color: Colors.black),
+                                  children: [
+                                    TextSpan(
+                                        text: "USD",
+                                        style: TextStyle(fontSize:14,color: Color(0xff9896a1,),)
+                                    )
+                                  ]
+                              )
+                          )
+
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16,right: 16,bottom: 10),
+                      child: Divider(),
+                    ),
+
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16,right: 16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Total",style: TextStyle(fontSize: 18),),
+                          RichText(
+                              text: TextSpan(
+                                  text: '\$ 59.50 ',
+                                  style: TextStyle(fontSize: 18,color: Colors.black),
+                                  children: [
+                                    TextSpan(
+                                        text: "USD",
+                                        style: TextStyle(fontSize:14,color: Color(0xff9896a1,),)
+                                    )
+                                  ]
+                              )
+                          )
+
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16,right: 16,bottom: 10),
+                      child: Divider(),
+                    ),
+                  ],
+                );
+              }else{
+                return SizedBox.shrink();
+              }
+
             }),
           ),
 
@@ -318,8 +329,8 @@ class _CartScreenState extends State<CartScreen> {
               height: 10,
             ),
           ),
-
-          SliverToBoxAdapter(
+          if(cartController.cartItems.isNotEmpty)
+            SliverToBoxAdapter(
             child: Center(
               child: ElevatedButton(
                 onPressed: (){

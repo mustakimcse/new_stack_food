@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:stack_food/screen/profile/payment_list_screen.dart';
 
 import '../../controller/cart_controller.dart';
+import '../../model/payment_method_list_model.dart';
 
 class CheckOutScreen extends StatefulWidget {
   const CheckOutScreen({super.key});
@@ -14,6 +16,7 @@ class CheckOutScreen extends StatefulWidget {
 
 class _CheckOutScreenState extends State<CheckOutScreen> {
   final cartController = Get.put(CartController());
+  PaymentMethodListModel? selectedPaymentMethod;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,7 +127,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(fontFamily: "RobotoB", fontSize: 16),
                                         ),
-                                        Text(
+                                        const Text(
                                           "with baked salmon",
                                           maxLines: 1,
                                           textAlign: TextAlign.start,
@@ -170,7 +173,7 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
                                         child: Padding(
                                           padding: EdgeInsets.only(right: 10),
                                           child: Icon(
-                                            Icons.delete,
+                                            Icons.edit,
                                             color: Color(0xffb80808),
                                             size: 18,
                                           ),
@@ -197,22 +200,202 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
               ),
             );
           }),
+          //payment method
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                padding: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(12))
+                ),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.asset("assets/icon/method.png"),
+                        ),
+                        Text("Payment Method"),
+
+                        Spacer(),
+
+                        if (selectedPaymentMethod != null)
+                          Row(
+                            children: [
+                              Image.asset(
+                                selectedPaymentMethod!.icon,
+                                height: 20,
+                              ),
+                              const SizedBox(width: 5),
+                              Text(selectedPaymentMethod!.name),
+                            ],
+                          ),
+
+                        IconButton(
+                          onPressed: () async {
+                            // Navigate to PaymentListScreen and handle the selected payment method
+                            final result = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => PaymentListScreen(
+                                  onSelectPaymentMethod: (method) {
+                                    setState(() {
+                                      selectedPaymentMethod = method;
+                                    });
+                                  },
+                                ),
+                              ),
+                            );
+                          },
+                          icon: const Icon(
+                            Icons.arrow_forward_ios,
+                            size: 17,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 10,),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.asset("assets/icon/discount.png"),
+                        ),
+                        Text("Get discount"),
+                        Spacer(),
+
+                        IconButton(
+                            onPressed: (){},
+                            icon: Icon(Icons.arrow_forward_ios,size: 17,)
+                        )
+                      ],
+                    ),
+
+
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+          //total calculation
+          SliverToBoxAdapter(
+            child: Obx((){
+              if(cartController.cartItems.isNotEmpty){
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    padding: EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(12))
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+
+
+
+                        Padding(
+                          padding: const EdgeInsets.only(left: 16,right: 16,bottom: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Subtotal",style: TextStyle(fontSize: 15),),
+                              RichText(
+                                  text: TextSpan(
+                                      text: '\$ ${cartController.totalPrice} ',
+                                      style: TextStyle(fontSize: 15,color: Colors.black),
+                                      children: [
+                                        TextSpan(
+                                            text: "USD",
+                                            style: TextStyle(fontSize:14,color: Color(0xff9896a1,),)
+                                        )
+                                      ]
+                                  )
+                              )
+
+                            ],
+                          ),
+                        ),
+
+
+
+
+                        Padding(
+                          padding: const EdgeInsets.only(left: 16,right: 16,bottom: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Deoivery Fee",style: TextStyle(fontSize: 15),),
+                              RichText(
+                                  text: TextSpan(
+                                      text: '\$ 3.50 ',
+                                      style: TextStyle(fontSize: 15,color: Colors.black),
+                                      children: [
+                                        TextSpan(
+                                            text: "USD",
+                                            style: TextStyle(fontSize:14,color: Color(0xff9896a1,),)
+                                        )
+                                      ]
+                                  )
+                              )
+
+                            ],
+                          ),
+                        ),
+
+
+                        Padding(
+                          padding: const EdgeInsets.only(left: 16,right: 16),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Total",style: TextStyle(fontSize: 15),),
+                              RichText(
+                                  text: TextSpan(
+                                      text: '\$ 59.50 ',
+                                      style: TextStyle(fontSize: 15,color: Colors.black),
+                                      children: [
+                                        TextSpan(
+                                            text: "USD",
+                                            style: TextStyle(fontSize:14,color: Color(0xff9896a1,),)
+                                        )
+                                      ]
+                                  )
+                              )
+
+                            ],
+                          ),
+                        ),
+
+                      ],
+                    ),
+                  ),
+                );
+              }else{
+                return SizedBox.shrink();
+              }
+
+            }),
+          ),
+
+          SliverToBoxAdapter(child: SizedBox(height: 30,)),
 
           SliverToBoxAdapter(
-            child: Container(
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(12))
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Text("Payment Method")
-                    ],
-                  )
-                ],
+            child: Center(
+              child: ElevatedButton(
+                onPressed: (){
+                  Get.to(CheckOutScreen());
+                },
+                style: ElevatedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 100),
+                    backgroundColor: const Color(0xffb80808)
+                ),
+                child:  Text("Place Order - \$ ${cartController.totalPrice}",style: TextStyle(color: Colors.white,fontSize: 20),),
               ),
             ),
           )

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:stack_food/controller/cart_controller.dart';
+import 'package:stack_food/screen/food_screen.dart';
 
 import '../../model/product_model.dart';
 import '../../model/restaurants_model.dart';
@@ -89,24 +90,29 @@ class _FRestaurantsScreenState extends State<FRestaurantsScreen> {
             delegate: SliverChildBuilderDelegate(
                   (context, index) {
                 final restaurant = product[index];
-                return ProductWidget(
-                  id: restaurant.id,
-                  name: restaurant.name,
-                  manName: restaurant.subName,
-                  foodImage: restaurant.foodImage,
-                  RestImage: restaurant.restImage,
-                  leftTime: restaurant.time,
-                  onAddToCart: (){
-                    cardController.addToCart(
-                        restaurant.id,
-                        restaurant.name,
-                        restaurant.currentPrice.toDouble(),
-                        restaurant.foodImage
-                    );
+                return InkWell(
+                  onTap: (){
+                    Get.to(FoodScreen());
                   },
+                  child: ProductWidget(
+                    id: restaurant.id,
+                    name: restaurant.name,
+                    manName: restaurant.subName,
+                    foodImage: restaurant.foodImage,
+                    RestImage: restaurant.restImage,
+                    leftTime: restaurant.time,
+                    onAddToCart: (){
+                      cardController.addToCart(
+                          restaurant.id,
+                          restaurant.name,
+                          restaurant.currentPrice.toDouble(),
+                          restaurant.foodImage
+                      );
+                    },
 
-                  currentPrice: restaurant.currentPrice,
+                    currentPrice: restaurant.currentPrice,
 
+                  ),
                 );
               },
               childCount: product.length, // Number of restaurants in the list
