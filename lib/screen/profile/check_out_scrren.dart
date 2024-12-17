@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:stack_food/screen/profile/payment_list_screen.dart';
+import 'package:stack_food/widgets/custom_button.dart';
 
 import '../../controller/cart_controller.dart';
 import '../../model/payment_method_list_model.dart';
@@ -17,6 +18,17 @@ class CheckOutScreen extends StatefulWidget {
 class _CheckOutScreenState extends State<CheckOutScreen> {
   final cartController = Get.put(CartController());
   PaymentMethodListModel? selectedPaymentMethod;
+
+  Size responsiveSize(BuildContext context, double height, double width) {
+    double screenHeight = MediaQuery.of(context).size.height;
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    double height1 = screenHeight * height;
+    double width1 = screenWidth * width;
+
+    return Size(width1,height1);
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -387,15 +399,13 @@ class _CheckOutScreenState extends State<CheckOutScreen> {
 
           SliverToBoxAdapter(
             child: Center(
-              child: ElevatedButton(
-                onPressed: (){
-                  Get.to(CheckOutScreen());
-                },
-                style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 100),
-                    backgroundColor: const Color(0xffb80808)
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20,right: 20),
+                child: CustomButton(
+                  radius: 30,
+                    onPressed: (){},
+                    child: Text("Place Order - \$ ${cartController.totalPrice}",style: TextStyle(color: Colors.white,fontSize: responsiveSize(context, 0.021, 0).height),),
                 ),
-                child:  Text("Place Order - \$ ${cartController.totalPrice}",style: TextStyle(color: Colors.white,fontSize: 20),),
               ),
             ),
           )

@@ -337,7 +337,7 @@ class _CartScreenState extends State<CartScreen> {
                   Get.to(CheckOutScreen());
                 },
                 style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 100),
+                    padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 100),
                     backgroundColor: const Color(0xffb80808)
                 ),
                 child: const Text("Check Out",style: TextStyle(color: Colors.white,fontSize: 20),),
