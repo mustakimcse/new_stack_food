@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:stack_food/model/upload_model.dart';
 
 class UploadScreen extends StatefulWidget {
@@ -9,6 +10,7 @@ class UploadScreen extends StatefulWidget {
 }
 
 class _UploadScreenState extends State<UploadScreen> {
+  String? _image;
 
   final List<UploadModel> uploadList = [
     UploadModel(
@@ -95,5 +97,22 @@ class _UploadScreenState extends State<UploadScreen> {
         ],
       ),
     );
+  }
+
+
+  Future<void> getImage() async {
+    final ImagePicker picker = ImagePicker();
+    // Pick an image.
+    final XFile? image = await picker.pickImage(
+      source: ImageSource.camera,
+      imageQuality: 80,
+    );
+    if (image != null) {
+      //developer.log('Image path: ${image.path} -- MimeType: ${image.mimeType} type${image.path}');
+
+      setState(() {
+        _image = image.path;
+      });
+    }
   }
 }
