@@ -27,8 +27,8 @@ class ImageScreen extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: ClipRRect(
+                    borderRadius: BorderRadius.all(Radius.circular(15)),
                     child: Image.file(File(imagePath)),
-                              borderRadius: BorderRadius.all(Radius.circular(15)),
                             ),
                   ),
 
