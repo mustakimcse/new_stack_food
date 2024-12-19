@@ -63,9 +63,9 @@ class _RegScreenState extends State<RegScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Padding(
+                       Padding(
                         padding: EdgeInsets.only(left: 10,bottom: 10),
-                        child: Text("Sign up",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700),),
+                        child: Text("sign_up".tr,style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700),),
                       ),
 
                       //full name
@@ -74,16 +74,16 @@ class _RegScreenState extends State<RegScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Padding(
+                             Padding(
                               padding: EdgeInsets.all(8.0),
-                              child: Text("Full name",style: TextStyle(color: Color(0xff9997a2)),),
+                              child: Text("full_name".tr,style: TextStyle(color: Color(0xff9997a2)),),
                             ),
                             TextFormField(
                               decoration: InputDecoration(
-                                hintText: 'name',
+                                hintText: 'full_name'.tr,
                                 filled: true,
                                 fillColor: Colors.white,
-                                hintStyle: TextStyle(color: Color(0xffc4c4c4)),
+                                hintStyle: const TextStyle(color: Color(0xffc4c4c4)),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8.0), // Rounded corners
                                   borderSide: const BorderSide(
@@ -118,13 +118,13 @@ class _RegScreenState extends State<RegScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Padding(
+                             Padding(
                               padding: EdgeInsets.all(8.0),
-                              child: Text("Username",style: TextStyle(color: Color(0xff9997a2)),),
+                              child: Text("user_name".tr,style: TextStyle(color: Color(0xff9997a2)),),
                             ),
                             TextFormField(
                               decoration: InputDecoration(
-                                hintText: 'Username',
+                                hintText: 'user_name'.tr,
                                 filled: true,
                                 fillColor: Colors.white,
                                 hintStyle: TextStyle(color: Color(0xffc4c4c4)),
@@ -161,13 +161,13 @@ class _RegScreenState extends State<RegScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Padding(
+                             Padding(
                               padding: EdgeInsets.all(8.0),
-                              child: Text("E-mail",style: TextStyle(color: Color(0xff9997a2)),),
+                              child: Text("email_or_phone".tr,style: TextStyle(color: Color(0xff9997a2)),),
                             ),
                             TextFormField(
                               decoration: InputDecoration(
-                                hintText: 'Your email or phone',
+                                hintText: 'email_or_phone'.tr,
                                 filled: true,
                                 fillColor: Colors.white,
                                 hintStyle: TextStyle(color: Color(0xffc4c4c4)),
@@ -204,16 +204,16 @@ class _RegScreenState extends State<RegScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Padding(
+                             Padding(
                               padding: EdgeInsets.all(8.0),
-                              child: Text("Referral code (optional)",style: TextStyle(color: Color(0xff9997a2)),),
+                              child: Text("${"referral_code".tr} (${"optional".tr})",style: TextStyle(color: Color(0xff9997a2)),),
                             ),
                             TextFormField(
                               decoration: InputDecoration(
-                                hintText: 'Referral code',
+                                hintText: 'referral_code'.tr,
                                 filled: true,
                                 fillColor: Colors.white,
-                                hintStyle: TextStyle(color: Color(0xffc4c4c4)),
+                                hintStyle: const TextStyle(color: Color(0xffc4c4c4)),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8.0), // Rounded corners
                                   borderSide: const BorderSide(
@@ -247,14 +247,14 @@ class _RegScreenState extends State<RegScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text("Password",style: TextStyle(color: Color(0xff9997a2)),),
+                             Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text("password".tr,style: TextStyle(color: Color(0xff9997a2)),),
                             ),
 
                             TextFormField(
                               decoration: InputDecoration(
-                                hintText: 'Password',
+                                hintText: 'password'.tr,
                                 filled: true,
                                 hintStyle: TextStyle(color: Color(0xffc4c4c4)),
                                 fillColor: Colors.white,
@@ -295,7 +295,7 @@ class _RegScreenState extends State<RegScreen> {
                               padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 100),
                               backgroundColor: const Color(0xffb80808)
                           ),
-                          child: const Text("SIGN UP",style: TextStyle(color: Colors.white,fontSize: 20),),
+                          child:  Text("sign_up".tr,style: TextStyle(color: Colors.white,fontSize: 20),),
                         ),
                       ),
 
@@ -304,11 +304,11 @@ class _RegScreenState extends State<RegScreen> {
                               padding: EdgeInsets.symmetric(vertical: 30),
                               child: RichText(
                                 text: TextSpan(
-                                    text: "Already have an account? ",
+                                    text: "already_have_account".tr,
                                     style: TextStyle(color: Color(0xff5b5b5d,),fontSize: 15,),
                                     children: [
                                       TextSpan(
-                                          text: "Login",
+                                          text: "sign_in".tr,
                                           style: TextStyle(color: Color(0xffcc4a48)),
                                         recognizer: TapGestureRecognizer()
                                           ..onTap=(){
@@ -322,12 +322,12 @@ class _RegScreenState extends State<RegScreen> {
                           )
                       ),
 
-                      const Row(
+                       Row(
                         children: [
                           Expanded(child: Divider()),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 10),
-                            child: Text("Sign up with",style: TextStyle(color: Color(0xff5b5b5d,),fontSize: 15),),
+                            child: Text("or_continue_with".tr,style: TextStyle(color: Color(0xff5b5b5d,),fontSize: 15),),
                           ),
                           Expanded(child: Divider())
                         ],
