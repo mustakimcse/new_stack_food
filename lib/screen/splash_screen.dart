@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:stack_food/auth/login_screen.dart';
 
+import '../controller/loacl_translator_controller.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
 
@@ -12,6 +14,8 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  String? selectedLanguage = 'en';
+
   @override
   void initState() {
     // TODO: implement initState
@@ -20,13 +24,15 @@ class _SplashScreenState extends State<SplashScreen> {
     // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
     // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
-    Future.delayed(Duration(seconds: 2),(){
-      Get.off(LoginScreen());
-    });
+    // Future.delayed(Duration(seconds: 2),(){
+    //   Get.off(LoginScreen());
+    // });
+
     super.initState();
   }
   @override
   Widget build(BuildContext context) {
+    final translatorController = Get.find<TranslatorController>();
     return Scaffold(
 
       body: Stack(
@@ -86,7 +92,52 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
           ),
 
-          Center(child: Image.asset("assets/yeloooo.png"))
+          Center(child: Image.asset("assets/yeloooo.png")),
+
+          // Main content
+
+          Positioned(
+            bottom: 200,
+            left: 0,
+            right: 0,
+            child: Column(
+              children: [
+                Obx((){
+                  return DropdownButton<String>(
+                    value: translatorController.currentLocale.value.languageCode,
+                    onChanged: (value) {
+                      translatorController.changeLanguage(value!);
+                    },
+                    items: const [
+                      DropdownMenuItem(
+                        value: 'en',
+                        child: Text('English'),
+                      ),
+                      DropdownMenuItem(
+                        value: 'bn',
+                        child: Text('বাংলা'),
+                      ),
+                    ],
+                    style: const TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                    ),
+                    underline: Container(
+                      height: 2,
+                      color: Colors.redAccent,
+                    ),
+                    icon: const Icon(Icons.language),
+                  );
+                }),
+                ElevatedButton(
+                    onPressed: (){
+                      Get.off(LoginScreen());
+                    },
+                    child: Text("next".tr)
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );

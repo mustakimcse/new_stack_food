@@ -62,22 +62,22 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Padding(
-                      padding: EdgeInsets.only(left: 10,bottom: 10),
-                      child: Text("Login",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700),),
+                     Padding(
+                      padding: const EdgeInsets.only(left: 10,bottom: 10),
+                      child: Text("sign_in".tr,style: TextStyle(fontSize: 20,fontWeight: FontWeight.w700),),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Padding(
+                           Padding(
                             padding: EdgeInsets.all(8.0),
-                            child: Text("E-mail",style: TextStyle(color: Color(0xff9997a2)),),
+                            child: Text("email".tr,style: TextStyle(color: Color(0xff9997a2)),),
                           ),
                           TextFormField(
                             decoration: InputDecoration(
-                              hintText: 'Your email or phone',
+                              hintText: 'enter_email_address'.tr,
                               filled: true,
                               fillColor: Colors.white,
                               hintStyle: TextStyle(color: Color(0xffc4c4c4)),
@@ -113,14 +113,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const Padding(
+                           Padding(
                             padding: EdgeInsets.all(8.0),
-                            child: Text("Password",style: TextStyle(color: Color(0xff9997a2)),),
+                            child: Text("password".tr,style: TextStyle(color: Color(0xff9997a2)),),
                           ),
               
                           TextFormField(
                             decoration: InputDecoration(
-                              hintText: 'Password',
+                              hintText: 'password'.tr,
                               filled: true,
                               hintStyle: TextStyle(color: Color(0xffc4c4c4)),
                               fillColor: Colors.white,
@@ -152,10 +152,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     ),
               
-                    const Center(
+                     Center(
                         child: Padding(
                           padding: EdgeInsets.symmetric(vertical: 30),
-                          child: Text("Forgot Password",style: TextStyle(color: Color(0xffb80808,),fontSize: 15,),),
+                          child: Text("forgot_password".tr,style: TextStyle(color: Color(0xffb80808,),fontSize: 15,),),
                         )
                     ),
               
@@ -168,7 +168,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 100),
                           backgroundColor: const Color(0xffb80808)
                         ),
-                          child: const Text("LOGIN",style: TextStyle(color: Colors.white,fontSize: 20),),
+                          child:  Text("sign_in".tr,style: TextStyle(color: Colors.white,fontSize: 20),),
                       ),
                     ),
               
@@ -177,11 +177,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           padding: EdgeInsets.symmetric(vertical: 30),
                           child: RichText(
                               text:  TextSpan(
-                                text: "Don't have an account? ",
+                                text: "do_not_have_account".tr,
                                 style: const TextStyle(color: Color(0xff5b5b5d,),fontSize: 15,),
                                 children: [
                                   TextSpan(
-                                      text: "Sign up",
+                                      text: "sign_up".tr,
                                       style: const TextStyle(color: Color(0xffcc4a48)),
                                     recognizer: TapGestureRecognizer()
                                       ..onTap=(){
@@ -196,12 +196,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         )
                     ),
               
-                    const Row(
+                     Row(
                       children: [
-                        Expanded(child: Divider()),
+                        const Expanded(child: Divider()),
                         Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10),
-                          child: Text("Sign in with",style: TextStyle(color: Color(0xff5b5b5d,),fontSize: 15),),
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Text("or_continue_with".tr,style: TextStyle(color: Color(0xff5b5b5d,),fontSize: 15),),
                         ),
                         Expanded(child: Divider())
                       ],

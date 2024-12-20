@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:stack_food/screen/home_item/trades_screen.dart';
 
 import 'home_item/following_screen.dart';
@@ -48,6 +50,29 @@ class _HomeScreenState extends State<HomeScreen> {
             Padding(
               padding: const EdgeInsets.only(right: 20),
               child: Image.asset("assets/icon/bell.png"),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.only(right: 20),
+              child: DropdownButton<Locale>(
+                underline: const SizedBox(),
+                icon: const Icon(Icons.language, color: Colors.black),
+                items: const [
+                  DropdownMenuItem(
+                    value: Locale('en'),
+                    child: Text('English'),
+                  ),
+                  DropdownMenuItem(
+                    value: Locale('bn'),
+                    child: Text('বাংলা'),
+                  ),
+                ],
+                onChanged: (Locale? locale) {
+                  if (locale != null) {
+                    Get.updateLocale(locale);
+                  }
+                },
+              ),
             ),
           ],
           bottom: const TabBar(
