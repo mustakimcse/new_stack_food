@@ -1,8 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:stack_food/screen/home_item/trades_screen.dart';
-
+import 'package:http/http.dart'as http;
 import 'home_item/following_screen.dart';
 import 'home_item/restaurants_screen.dart';
 
@@ -52,28 +54,12 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Image.asset("assets/icon/bell.png"),
             ),
 
-            Padding(
-              padding: const EdgeInsets.only(right: 20),
-              child: DropdownButton<Locale>(
-                underline: const SizedBox(),
-                icon: const Icon(Icons.language, color: Colors.black),
-                items: const [
-                  DropdownMenuItem(
-                    value: Locale('en'),
-                    child: Text('English'),
-                  ),
-                  DropdownMenuItem(
-                    value: Locale('bn'),
-                    child: Text('বাংলা'),
-                  ),
-                ],
-                onChanged: (Locale? locale) {
-                  if (locale != null) {
-                    Get.updateLocale(locale);
-                  }
+            IconButton(
+                onPressed: (){
+                  testApi();
                 },
-              ),
-            ),
+                icon: Icon(Icons.add)
+            )
           ],
           bottom: const TabBar(
             indicatorColor: Color(0xffb80808),
@@ -95,5 +81,28 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  void testApi() async {
+    try {
+      const url = 'https://stackfood-admin.6amtech.com/api/v1/restaurants/popular';
+      final headers = {
+        "Content-Type": "application/json; charset=UTF-8",
+        "zoneId": "1"
+      };
+
+      final response = await http.get(Uri.parse(url), headers: headers);
+
+      if (response.statusCode == 200) {
+        // Parse JSON response
+        final data = jsonDecode(response.body);
+        print('Response Data: $data');
+      } else {
+        print('Failed with status: ${response.statusCode}');
+        print('Response Body: ${response.body}');
+      }
+    } catch (e) {
+      print('Error: $e');
+    }
   }
 }
