@@ -13,6 +13,13 @@ class SettingScreen extends StatefulWidget {
 class _SettingScreenState extends State<SettingScreen> {
 
   final List<SettingModel> settingList = [
+
+    SettingModel(
+      id: 1,
+      name: "Profile",
+      iconImage: "assets/setting/shield-user.png",
+    ),
+
     SettingModel(
       id: 1,
       name: "Privacy",
@@ -20,19 +27,19 @@ class _SettingScreenState extends State<SettingScreen> {
     ),
 
     SettingModel(
-      id: 1,
+      id: 2,
       name: "Refer & Earn",
       iconImage: "assets/setting/users-group-alt.png",
     ),
 
     SettingModel(
-      id: 1,
+      id: 3,
       name: "Order History",
       iconImage: "assets/setting/time_past.png",
     ),
 
     SettingModel(
-      id: 1,
+      id: 4,
       name: "Wallet",
       iconImage: "assets/setting/wallet.png",
     ),
@@ -91,7 +98,7 @@ class _SettingScreenState extends State<SettingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Upload"),
+        title: Text("Setting"),
         centerTitle: true,
         automaticallyImplyLeading: false,
       ),
