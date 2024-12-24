@@ -37,7 +37,7 @@ class _FHomeScreenState extends State<FHomeScreen> with SingleTickerProviderStat
           return [
             SliverAppBar(
               pinned: true,
-              expandedHeight: 480.0,
+              expandedHeight: 500.0,
               automaticallyImplyLeading: false,
               flexibleSpace: FlexibleSpaceBar(
                 background: Stack(
@@ -125,7 +125,7 @@ class _FHomeScreenState extends State<FHomeScreen> with SingleTickerProviderStat
                                   ],
                                 ),
                               ),
-                              const SizedBox(height: 30),
+                              const SizedBox(height: 20),
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: [
