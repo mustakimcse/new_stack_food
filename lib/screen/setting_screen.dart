@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:stack_food/model/upload_model.dart';
+import 'package:stack_food/screen/profile/profile_update_screen.dart';
 
 import '../model/setting_model.dart';
 
@@ -17,17 +20,17 @@ class _SettingScreenState extends State<SettingScreen> {
     SettingModel(
       id: 1,
       name: "Profile",
-      iconImage: "assets/setting/shield-user.png",
+      iconImage: "assets/icon/user.png",
     ),
 
     SettingModel(
-      id: 1,
+      id: 2,
       name: "Privacy",
       iconImage: "assets/setting/shield-user.png",
     ),
 
     SettingModel(
-      id: 2,
+      id: 3,
       name: "Refer & Earn",
       iconImage: "assets/setting/users-group-alt.png",
     ),
@@ -107,33 +110,38 @@ class _SettingScreenState extends State<SettingScreen> {
           SliverList.builder(
               itemCount: settingList.length,
               itemBuilder: (context,index){
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    padding: EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.2),
-                          spreadRadius: 1,
-                          blurRadius: 5,
-                          offset: const Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20,right: 20),
-                          child: Image.asset(settingList[index].iconImage,height: 20,fit: BoxFit.contain,),
-                        ),
-                        Text(settingList[index].name,
-                          style: const TextStyle(color: Colors.black,fontSize: 18),
-                          textAlign: TextAlign.center,
-                        ),
-                      ],
+                return InkWell(
+                  onTap: (){
+                    Get.to(const ProfileUpdateScreen());
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      padding: EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.2),
+                            spreadRadius: 1,
+                            blurRadius: 5,
+                            offset: const Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20,right: 20),
+                            child: Image.asset(settingList[index].iconImage,height: 20,fit: BoxFit.contain,),
+                          ),
+                          Text(settingList[index].name,
+                            style: const TextStyle(color: Colors.black,fontSize: 18),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 );

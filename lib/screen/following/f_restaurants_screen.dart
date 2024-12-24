@@ -69,19 +69,7 @@ class _FRestaurantsScreenState extends State<FRestaurantsScreen> {
 
       body: CustomScrollView(
         slivers: [
-          SliverToBoxAdapter(
-            child: ElevatedButton(
-                onPressed: (){
-                  cardController.addToCart(
-                      2,
-                      'test food',
-                      12,
-                      "assets/food/res7.png"
-                  );
-                },
-                child: Text("test")
-            ),
-          ),
+
           SliverGrid(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,

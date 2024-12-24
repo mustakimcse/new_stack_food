@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stack_food/util/responsiveSize.dart';
 
 
 
@@ -59,7 +60,7 @@ class _ProductWidgetState extends State<ProductWidget> {
       
                 Positioned(
                   left: 10,
-                  top: 20,
+                  top: 40,
                   child: Container(
                     padding: EdgeInsets.only(top: 5,left: 8,right: 8,bottom: 5),
                     decoration: const BoxDecoration(
@@ -107,17 +108,17 @@ class _ProductWidgetState extends State<ProductWidget> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                                   children: [
-                                    const Row(
+                                     Row(
                                       children: [
-                                        Text("4.5 ",style: TextStyle(fontSize: 8),),
-                                        Icon(Icons.star,color: Colors.orangeAccent,size: 8,),
-                                        Text("25 +",style: TextStyle(color: Color(0xff9896a0,),fontSize: 8),)
+                                        Text("4.5 ",style: TextStyle(fontSize: responsiveSize(context, 0.008, 0).height),),
+                                        Icon(Icons.star,color: Colors.orangeAccent,size: responsiveSize(context, 0.008, 0).height,),
+                                        Text("25 +",style: TextStyle(color: Color(0xff9896a0,),fontSize: responsiveSize(context, 0.008, 0).height),)
                                       ],
                                     ),
                                     Row(
                                       children: [
-                                        Text("Distance ",style: TextStyle(fontSize: 8),),
-                                        Text("${widget.leftTime} min",style: TextStyle(color: Color(0xff9896a0,),fontSize: 8),)
+                                        Text("Distance ",style: TextStyle(fontSize: responsiveSize(context, 0.008, 0).height),),
+                                        Text("${widget.leftTime} min",style: TextStyle(color: Color(0xff9896a0,),fontSize: responsiveSize(context, 0.008, 0).height),)
                                       ],
                                     ),
                                   ],
