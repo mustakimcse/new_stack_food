@@ -82,6 +82,7 @@ flutter:
    - assets/icon/bike.png
    - assets/icon/edit.png
    - assets/icon/user-plus.png
+   - assets/icon/user.png
    - assets/icon/clock.png
    - assets/icon/check-circle.png
    - assets/icon/send.png
@@ -110,10 +111,12 @@ flutter:
    - assets/food/res13.png
    - assets/food/res14.png
    - assets/food/res15.png
+   - assets/food/res16.png
    - assets/shafe/shafe1.png
    - assets/shafe/shafe2.png
    - assets/man/per1.png
    - assets/man/per2.png
+   - assets/man/per3.png
    - assets/cat/cat1.png
    - assets/cat/cat2.png
    - assets/cat/cat3.png
