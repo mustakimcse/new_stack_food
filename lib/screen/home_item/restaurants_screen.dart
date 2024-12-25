@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:stack_food/screen/restaurant/res_home_screen.dart';
 
 import '../../model/restaurants_model.dart';
 import '../../widgets/restaurant_widget.dart';
@@ -52,15 +55,20 @@ class _RestaurantsScreenState extends State<RestaurantsScreen> {
             delegate: SliverChildBuilderDelegate(
                   (context, index) {
                 final restaurant = restaurants[index];
-                return RestaurantWidget(
-                  id: restaurant.id,
-                  name: restaurant.name,
-                  foodImage: restaurant.foodImage,
-                  RestImage: restaurant.restImage,
-                  time: restaurant.time,
-                  leftTime: restaurant.leftTime,
-                  currentPrice: restaurant.currentPrice,
-                  foodList: restaurant.foodList.map((food) => food.name).toList(),
+                return InkWell(
+                  onTap: (){
+                    Get.to(ResHomeScreen());
+                  },
+                  child: RestaurantWidget(
+                    id: restaurant.id,
+                    name: restaurant.name,
+                    foodImage: restaurant.foodImage,
+                    RestImage: restaurant.restImage,
+                    time: restaurant.time,
+                    leftTime: restaurant.leftTime,
+                    currentPrice: restaurant.currentPrice,
+                    foodList: restaurant.foodList.map((food) => food.name).toList(),
+                  ),
                 );
               },
               childCount: restaurants.length, // Number of restaurants in the list
