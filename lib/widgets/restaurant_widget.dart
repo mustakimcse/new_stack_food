@@ -1,7 +1,10 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:stack_food/model/restaurants/all_resturants_model.dart';
+import 'package:stack_food/util/api.dart';
 
 
 
@@ -13,7 +16,7 @@ class RestaurantWidget extends StatefulWidget {
   final String time;
   final String leftTime;
   final int currentPrice;
-  final List<String> foodList;
+  final List<Foods> foodList;
 
   const RestaurantWidget({
     super.key,
@@ -47,12 +50,13 @@ class _RestaurantWidgetState extends State<RestaurantWidget> {
             Stack(
               clipBehavior: Clip.none,
               children: [
-                Image.asset(widget.foodImage),
+                //Image.asset(widget.foodImage),
+                CachedNetworkImage(imageUrl: '${Apis.imageUrl}restaurant/cover/${widget.foodImage}'),
                 Positioned(
-                    bottom: -180,
+                    bottom: -40,
                     left: 0,
                     right: 0,
-                    child: Image.asset(widget.RestImage)
+                    child: CachedNetworkImage(imageUrl: '${Apis.imageUrl}restaurant/${widget.RestImage}',height: 80,)
                 ),
                 Positioned(
                   left: 10,
@@ -135,7 +139,7 @@ class _RestaurantWidgetState extends State<RestaurantWidget> {
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 8.0),
                       child: Chip(
-                        label: Text(widget.foodList[index]),
+                        label: Text(widget.foodList[index].name),
                         backgroundColor: Color(0xfff6f6f5),
                         side: BorderSide(color: Colors.white),
                       ),

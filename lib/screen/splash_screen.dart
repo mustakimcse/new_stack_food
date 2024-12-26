@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:stack_food/auth/login_screen.dart';
 
 import '../controller/loacl_translator_controller.dart';
+import '../navbar/bottom_navbar.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -21,12 +22,20 @@ class _SplashScreenState extends State<SplashScreen> {
     // TODO: implement initState
 
     // Set the screen to full-screen mode
-    // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
-    // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle());
 
     // Future.delayed(Duration(seconds: 2),(){
     //   Get.off(LoginScreen());
     // });
+
+    Future.delayed(Duration.zero, () {
+      final translatorController = Get.find<TranslatorController>();
+      if (translatorController.currentLocale.value.languageCode.isNotEmpty) {
+        // Navigate to BottomNavBar if language is set
+        Get.off(() => BottomNavBar());
+      }
+    });
 
     super.initState();
   }
