@@ -43,8 +43,8 @@ class _FoodScreenState extends State<FoodScreen> {
   String? selectedType = "S";
   // List of sizes with prices
   final List<Map<String, dynamic>> typeList = [
-    {"value": "S", "name": "Baby spinach", "price": 2.30,"image":"assets/food/res14"},
-    {"value": "M", "name": "Mushroom", "price": 2.30,"image":"assets/food/res15"},
+    {"value": "S", "name": "Baby spinach", "price": 2.30,"image":"assets/food/res17.png"},
+    {"value": "M", "name": "Mushroom", "price": 2.30,"image":"assets/food/res18.png"},
   ];
 
   @override
@@ -281,9 +281,10 @@ class _FoodScreenState extends State<FoodScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 8.0),
                           child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            //mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               // Size Name
+                              Image.asset(type["image"]),
                               Text(
                                 type["name"],
                                 style: const TextStyle(
@@ -291,6 +292,7 @@ class _FoodScreenState extends State<FoodScreen> {
                                   fontWeight: FontWeight.w500,
                                 ),
                               ),
+                              Spacer(),
                               Row(
                                 children: [
                                   // Price

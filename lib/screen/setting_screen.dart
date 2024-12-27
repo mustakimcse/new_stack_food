@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:stack_food/model/upload_model.dart';
+import 'package:stack_food/screen/profile/order_history_screen.dart';
 import 'package:stack_food/screen/profile/profile_update_screen.dart';
 
 import '../model/setting_model.dart';
@@ -36,13 +37,13 @@ class _SettingScreenState extends State<SettingScreen> {
     ),
 
     SettingModel(
-      id: 3,
+      id: 4,
       name: "Order History",
       iconImage: "assets/setting/time_past.png",
     ),
 
     SettingModel(
-      id: 4,
+      id: 5,
       name: "Wallet",
       iconImage: "assets/setting/wallet.png",
     ),
@@ -110,14 +111,20 @@ class _SettingScreenState extends State<SettingScreen> {
           SliverList.builder(
               itemCount: settingList.length,
               itemBuilder: (context,index){
+                final option=settingList[index];
                 return InkWell(
                   onTap: (){
-                    Get.to(const ProfileUpdateScreen());
+                    if(option.id==1){
+                      Get.to(const ProfileUpdateScreen());
+                    }else if(option.id==4){
+                      Get.to(OrderHistoryScreen());
+                    }
+
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                      padding: EdgeInsets.all(20),
+                      padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(12),
