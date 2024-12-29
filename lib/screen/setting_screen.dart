@@ -4,6 +4,8 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:stack_food/model/upload_model.dart';
 import 'package:stack_food/screen/profile/order_history_screen.dart';
 import 'package:stack_food/screen/profile/profile_update_screen.dart';
+import 'package:stack_food/screen/wallet/get_coins_screen.dart';
+import 'package:stack_food/screen/wallet/wallet_screen.dart';
 
 import '../model/setting_model.dart';
 
@@ -49,49 +51,49 @@ class _SettingScreenState extends State<SettingScreen> {
     ),
 
     SettingModel(
-      id: 1,
+      id: 6,
       name: "Get coins",
       iconImage: "assets/icon/bargar.png",
     ),
 
     SettingModel(
-      id: 1,
+      id: 7,
       name: "Terms and condition",
       iconImage: "assets/setting/sticky-note-text-square.png",
     ),
 
     SettingModel(
-      id: 1,
+      id: 8,
       name: "My delivery address",
       iconImage: "assets/setting/location-pin.png",
     ),
 
     SettingModel(
-      id: 1,
+      id: 9,
       name: "Language",
       iconImage: "assets/setting/globe.png",
     ),
 
     SettingModel(
-      id: 1,
+      id: 10,
       name: "Join as delivery man",
       iconImage: "assets/setting/truck.png",
     ),
 
     SettingModel(
-      id: 1,
+      id: 11,
       name: "Request verification",
       iconImage: "assets/setting/award-star.png",
     ),
 
     SettingModel(
-      id: 1,
+      id: 12,
       name: "help & support",
       iconImage: "assets/setting/info-circle.png",
     ),
 
     SettingModel(
-      id: 1,
+      id: 13,
       name: "Log out",
       iconImage: "assets/setting/log-out.png",
     ),
@@ -118,6 +120,10 @@ class _SettingScreenState extends State<SettingScreen> {
                       Get.to(const ProfileUpdateScreen());
                     }else if(option.id==4){
                       Get.to(OrderHistoryScreen());
+                    }else if(option.id==5){
+                      Get.to(WalletScreen());
+                    }else if(option.id==6){
+                      Get.to(GetCoinsScreen());
                     }
 
                   },
