@@ -29,11 +29,11 @@ class _SplashScreenState extends State<SplashScreen> {
     //   Get.off(LoginScreen());
     // });
 
-    Future.delayed(Duration.zero, () {
+    Future.delayed(Duration.zero, () async{
       final translatorController = Get.find<TranslatorController>();
-      if (translatorController.currentLocale.value.languageCode.isNotEmpty) {
-        // Navigate to BottomNavBar if language is set
-        Get.off(() => BottomNavBar());
+      bool isSelected = await translatorController.isLanguageSelected();
+      if (isSelected) {
+        Get.off(() => const BottomNavBar());
       }
     });
 
@@ -44,110 +44,122 @@ class _SplashScreenState extends State<SplashScreen> {
     final translatorController = Get.find<TranslatorController>();
     return Scaffold(
 
-      body: Stack(
+      body: FutureBuilder(
+          future: translatorController.isLanguageSelected(),
+          builder: (context,snapshot){
+            if(snapshot.connectionState==ConnectionState.waiting){
+              return const CircularProgressIndicator();
+            }else if(snapshot.data==true){
+              return const CircularProgressIndicator();
+            }
+            else{
+              return Stack(
 
-        children: [
-          Positioned(
-            top: -90, // Adjust to align semi-circle correctly
-            right: -90, // Adjust to align semi-circle correctly
-            child: CustomPaint(
-              size: const Size(190, 90), // Size of the semi-circle
-              painter: SemiCircleForRightPainter(),
-            ),
-          ),
-
-          Positioned(
-            top: -90, // Adjust to align semi-circle correctly
-            left: -5, // Adjust to align semi-circle correctly
-            child: CustomPaint(
-              size: const Size(160, 80), // Size of the semi-circle
-              painter: SemiCirclePainter(),
-            ),
-          ),
-
-          Positioned(
-            top: -60, // Adjust to align semi-circle correctly
-            left: -100, // Adjust to align semi-circle correctly
-            child: CustomPaint(
-              size: const Size(160, 80), // Size of the semi-circle
-              painter: SemiDoubleCirclePainter(),
-            ),
-          ),
-          //bottom
-          Positioned(
-            bottom: 5, // Adjust to align semi-circle correctly
-            right: -90, // Adjust to align semi-circle correctly
-            child: CustomPaint(
-              size: const Size(190, 90), // Size of the semi-circle
-              painter: SemiCircleBottomRightPainter(),
-            ),
-          ),
-
-          Positioned(
-            bottom: 0, // Adjust to align semi-circle correctly
-            left: -5, // Adjust to align semi-circle correctly
-            child: CustomPaint(
-              size: const Size(190, 90), // Size of the semi-circle
-              painter: SemiCircleForBottomTopPainter(),
-            ),
-          ),
-
-          Positioned(
-            bottom: 20, // Adjust to align semi-circle correctly
-            left: -100, // Adjust to align semi-circle correctly
-            child: CustomPaint(
-              size: const Size(160, 80), // Size of the semi-circle
-              painter: SemiDoubleBottomCirclePainter(),
-            ),
-          ),
-
-          Center(child: Image.asset("assets/yeloooo.png")),
-
-          // Main content
-
-          Positioned(
-            bottom: 200,
-            left: 0,
-            right: 0,
-            child: Column(
-              children: [
-                Obx((){
-                  return DropdownButton<String>(
-                    value: translatorController.currentLocale.value.languageCode,
-                    onChanged: (value) {
-                      translatorController.changeLanguage(value!);
-                    },
-                    items: const [
-                      DropdownMenuItem(
-                        value: 'en',
-                        child: Text('English'),
-                      ),
-                      DropdownMenuItem(
-                        value: 'bn',
-                        child: Text('বাংলা'),
-                      ),
-                    ],
-                    style: const TextStyle(
-                      fontSize: 16,
-                      color: Colors.black,
+                children: [
+                  Positioned(
+                    top: -90, // Adjust to align semi-circle correctly
+                    right: -90, // Adjust to align semi-circle correctly
+                    child: CustomPaint(
+                      size: const Size(190, 90), // Size of the semi-circle
+                      painter: SemiCircleForRightPainter(),
                     ),
-                    underline: Container(
-                      height: 2,
-                      color: Colors.redAccent,
+                  ),
+
+                  Positioned(
+                    top: -90, // Adjust to align semi-circle correctly
+                    left: -5, // Adjust to align semi-circle correctly
+                    child: CustomPaint(
+                      size: const Size(160, 80), // Size of the semi-circle
+                      painter: SemiCirclePainter(),
                     ),
-                    icon: const Icon(Icons.language),
-                  );
-                }),
-                ElevatedButton(
-                    onPressed: (){
-                      Get.off(LoginScreen());
-                    },
-                    child: Text("next".tr)
-                ),
-              ],
-            ),
-          )
-        ],
+                  ),
+
+                  Positioned(
+                    top: -60, // Adjust to align semi-circle correctly
+                    left: -100, // Adjust to align semi-circle correctly
+                    child: CustomPaint(
+                      size: const Size(160, 80), // Size of the semi-circle
+                      painter: SemiDoubleCirclePainter(),
+                    ),
+                  ),
+                  //bottom
+                  Positioned(
+                    bottom: 5, // Adjust to align semi-circle correctly
+                    right: -90, // Adjust to align semi-circle correctly
+                    child: CustomPaint(
+                      size: const Size(190, 90), // Size of the semi-circle
+                      painter: SemiCircleBottomRightPainter(),
+                    ),
+                  ),
+
+                  Positioned(
+                    bottom: 0, // Adjust to align semi-circle correctly
+                    left: -5, // Adjust to align semi-circle correctly
+                    child: CustomPaint(
+                      size: const Size(190, 90), // Size of the semi-circle
+                      painter: SemiCircleForBottomTopPainter(),
+                    ),
+                  ),
+
+                  Positioned(
+                    bottom: 20, // Adjust to align semi-circle correctly
+                    left: -100, // Adjust to align semi-circle correctly
+                    child: CustomPaint(
+                      size: const Size(160, 80), // Size of the semi-circle
+                      painter: SemiDoubleBottomCirclePainter(),
+                    ),
+                  ),
+
+                  Center(child: Image.asset("assets/yeloooo.png")),
+
+                  // Main content
+
+                  Positioned(
+                    bottom: 200,
+                    left: 0,
+                    right: 0,
+                    child: Column(
+                      children: [
+                        Obx((){
+                          return DropdownButton<String>(
+                            value: translatorController.currentLocale.value.languageCode,
+                            onChanged: (value) {
+                              translatorController.changeLanguage(value!);
+                            },
+                            items: const [
+                              DropdownMenuItem(
+                                value: 'en',
+                                child: Text('English'),
+                              ),
+                              DropdownMenuItem(
+                                value: 'bn',
+                                child: Text('বাংলা'),
+                              ),
+                            ],
+                            style: const TextStyle(
+                              fontSize: 16,
+                              color: Colors.black,
+                            ),
+                            underline: Container(
+                              height: 2,
+                              color: Colors.redAccent,
+                            ),
+                            icon: const Icon(Icons.language),
+                          );
+                        }),
+                        ElevatedButton(
+                            onPressed: (){
+                              Get.off(LoginScreen());
+                            },
+                            child: Text("next".tr)
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              );
+            }
+          }
       ),
     );
   }
