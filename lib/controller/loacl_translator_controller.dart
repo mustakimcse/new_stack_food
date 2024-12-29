@@ -5,20 +5,22 @@ import 'dart:ui';
 
 class TranslatorController extends GetxController {
   static const String _languageKey = 'selected_language';
+  static const String _languageSelectedFlag = 'language_selected';
 
   var currentLocale = const Locale('en').obs;
 
   TranslatorController() {
-    _loadSavedLanguage(); // Load the saved language when the controller is created
+    _loadSavedLanguage();
   }
 
   void changeLanguage(String languageCode) async {
     currentLocale.value = Locale(languageCode);
     Get.updateLocale(currentLocale.value);
 
-    // Save the selected language locally
+    // Save the selected language and the flag locally
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString(_languageKey, languageCode);
+    await prefs.setBool(_languageSelectedFlag, true); // Mark as selected
   }
 
   Future<void> _loadSavedLanguage() async {
@@ -30,4 +32,10 @@ class TranslatorController extends GetxController {
       Get.updateLocale(currentLocale.value);
     }
   }
+
+  Future<bool> isLanguageSelected() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(_languageSelectedFlag) ?? false;
+  }
 }
+
