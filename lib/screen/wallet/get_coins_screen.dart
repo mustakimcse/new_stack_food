@@ -36,23 +36,37 @@ class _GetCoinsScreenState extends State<GetCoinsScreen> {
                     color: mrBackground,
                     borderRadius: const BorderRadius.all(Radius.circular(15))
                 ),
-                child:  Text("ssentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,"
-                    " and more recently with desktop publishing software like Aldus PageMaker including "
-                    "versions of Lorem Ipsum",
-                  style: TextStyle(color: Colors.white),
+                child:  RichText(
+                    text:  const TextSpan(
+                      text: 'Buy coins once to start bartering!\n',
+                      style: TextStyle(fontSize: 17,fontWeight: FontWeight.w600),
+                      children: [
+                        WidgetSpan(
+                          child: Padding(
+                            padding: EdgeInsets.only(top: 8.0), // Add padding to this section
+                            child: Text(
+                              'You can earn future coins by sharing your homemade meals. '
+                                  'Your purchase helps us grow the community and bring you more delicious options. Learn more ...',
+                              style: TextStyle(fontSize: 14,color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ]
+                    ),
                 ),
               ),
             ),
           ),
 
           SliverGrid.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2
               ),
               itemCount: 4,
               itemBuilder: (context,index){
                 return Card(
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Image.asset("assets/icon/bargar.png",height: 60,fit: BoxFit.fill,),
                       Text("16 coins"),
