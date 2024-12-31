@@ -7,6 +7,7 @@ class CustomButton extends StatelessWidget {
   final Color color; // Background color of the button
   final double radius; // Border radius of the button
   final double elevation; // Elevation of the button
+  final Widget? leading;
 
   const CustomButton({
     super.key,
@@ -16,6 +17,7 @@ class CustomButton extends StatelessWidget {
     this.color = const Color(0xffb80808),
     this.radius = 8.0,
     this.elevation = 4.0,
+    this.leading
   });
 
   @override
@@ -31,13 +33,21 @@ class CustomButton extends StatelessWidget {
             BoxShadow(
               color: Colors.black26,
               blurRadius: elevation,
-              offset: Offset(0, 4), // Shadow position
+              offset: const Offset(0, 4), // Shadow position
             ),
           ],
         ),
         padding: padding,
-        child: Center(
-          child: child,
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            if (leading != null) ...[
+              leading!,
+              const SizedBox(width: 8), // Space between the icon and text
+            ],
+            child,
+          ],
         ),
       ),
     );

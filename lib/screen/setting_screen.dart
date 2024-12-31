@@ -4,6 +4,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:stack_food/model/upload_model.dart';
 import 'package:stack_food/screen/profile/order_history_screen.dart';
 import 'package:stack_food/screen/profile/profile_update_screen.dart';
+import 'package:stack_food/screen/profile/request_verificaton_screen.dart';
 import 'package:stack_food/screen/wallet/get_coins_screen.dart';
 import 'package:stack_food/screen/wallet/wallet_screen.dart';
 
@@ -124,6 +125,8 @@ class _SettingScreenState extends State<SettingScreen> {
                       Get.to(WalletScreen());
                     }else if(option.id==6){
                       Get.to(GetCoinsScreen());
+                    }else if(option.id==11){
+                      Get.to(RequestVerificationScreen());
                     }
 
                   },
