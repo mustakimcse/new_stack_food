@@ -8,7 +8,7 @@
 PRODUCT_NAME = stack_food
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = com.example.stackFood
+PRODUCT_BUNDLE_IDENTIFIER = com.sixamtech.stackfooduser
 
 // The copyright displayed in application information
 PRODUCT_COPYRIGHT = Copyright © 2024 com.example. All rights reserved.

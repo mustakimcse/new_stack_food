@@ -41,6 +41,9 @@ dependencies:
   flutter_localization: ^0.3.0
   http: ^1.2.2
   cached_network_image: ^3.4.1
+  rename: ^3.0.2
+  firebase_core: ^3.10.0
+  google_maps_flutter: ^2.10.0
 
 dev_dependencies:
   flutter_test:
