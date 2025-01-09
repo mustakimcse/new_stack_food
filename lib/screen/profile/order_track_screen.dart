@@ -15,8 +15,8 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
   final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
 
   // Initial positions
-  static const LatLng _restaurantPosition = LatLng(37.42796133580664, -122.085749655962);
-  LatLng _driverPosition = const LatLng(37.43296265331129, -122.08832357078792); // Default position
+  static const LatLng _restaurantPosition = LatLng(23.7318153, -90.4127486);
+  LatLng _driverPosition = const LatLng(23.43296265331129, -90.08832357078792); // Default position
   Timer? _locationUpdateTimer;
 
   @override
@@ -169,4 +169,6 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
       ),
     );
   }
+
+
 }
