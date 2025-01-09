@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -14,6 +15,25 @@ void main() async{
   await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
 
+  if(GetPlatform.isWeb) {
+    await Firebase.initializeApp(options: const FirebaseOptions(
+      apiKey: 'AIzaSyCc3OCd5I2xSlnftZ4bFAbuCzMhgQHLivA',
+      appId: '1:491987943015:android:fe79b69339834d5c8f1ec2',
+      messagingSenderId: '491987943015',
+      projectId: 'stackmart-500c7',
+    ));
+  }else if(GetPlatform.isAndroid) {
+    await Firebase.initializeApp(
+      options: const FirebaseOptions(
+        apiKey: 'AIzaSyCc3OCd5I2xSlnftZ4bFAbuCzMhgQHLivA',
+        appId: '1:491987943015:android:fe79b69339834d5c8f1ec2',
+        messagingSenderId: '491987943015',
+        projectId: 'stackmart-500c7',
+      ),
+    );
+  } else {
+    await Firebase.initializeApp();
+  }
   // Initialize TranslatorController
   Get.put(TranslatorController());
 
