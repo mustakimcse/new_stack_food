@@ -15,15 +15,18 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
   final Completer<GoogleMapController> _controller = Completer<GoogleMapController>();
 
   // Initial positions
-  static const LatLng _restaurantPosition = LatLng(23.7318153, -90.4127486);
-  LatLng _driverPosition = const LatLng(23.43296265331129, -90.08832357078792); // Default position
+  static const LatLng _restaurantPosition = LatLng(23.8103, 90.4127486);
+  LatLng _driverPosition = const LatLng(23.7930, 90.4043); // Default position
   Timer? _locationUpdateTimer;
+
+  Set<Polyline> _polylines = {};
 
   @override
   void initState() {
     super.initState();
     // Start fetching location periodically
     _startLocationUpdates();
+    _drawRoute();
   }
 
   @override
@@ -55,6 +58,9 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
         setState(() {
           _driverPosition = LatLng(latitude, longitude);
         });
+
+        // Update route on location change
+        _drawRoute();
 
         // Move camera to the updated location
         final GoogleMapController controller = await _controller.future;
@@ -103,6 +109,7 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
                 infoWindow: const InfoWindow(title: 'Driver Location'),
               ),
             },
+            polylines: _polylines,
             onMapCreated: (GoogleMapController controller) {
               _controller.complete(controller);
             },
@@ -170,5 +177,70 @@ class _OrderTrackingScreenState extends State<OrderTrackingScreen> {
     );
   }
 
+  Future<void> _drawRoute() async {
+    try {
+      // Use Google Directions API to get the route
+      const String baseUrl = 'https://maps.googleapis.com/maps/api/directions/json';
+      const String apiKey = 'AIzaSyDUDEfxlI5sfTaeN-wOKphkht1ma2kgalY'; // Replace with your API key
+
+      final String url =
+          '$baseUrl?origin=${_restaurantPosition.latitude},${_restaurantPosition.longitude}'
+          '&destination=${_driverPosition.latitude},${_driverPosition.longitude}'
+          '&key=$apiKey';
+
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        final data = jsonDecode(response.body);
+
+        // Decode polyline points from the API response
+        final points = _decodePolyline(data['routes'][0]['overview_polyline']['points']);
+        setState(() {
+          _polylines = {
+            Polyline(
+              polylineId: PolylineId('route'),
+              points: points,
+              color: Colors.red,
+              width: 5,
+            ),
+          };
+        });
+      } else {
+        debugPrint('Failed to fetch route: ${response.statusCode}');
+      }
+    } catch (error) {
+      debugPrint('Error fetching route: $error');
+    }
+  }
+
+  List<LatLng> _decodePolyline(String encoded) {
+    List<LatLng> polylineCoordinates = [];
+    int index = 0, len = encoded.length;
+    int lat = 0, lng = 0;
+
+    while (index < len) {
+      int shift = 0, result = 0;
+      int b;
+      do {
+        b = encoded.codeUnitAt(index++) - 63;
+        result |= (b & 0x1F) << shift;
+        shift += 5;
+      } while (b >= 0x20);
+      int dlat = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+      lat += dlat;
+
+      shift = 0;
+      result = 0;
+      do {
+        b = encoded.codeUnitAt(index++) - 63;
+        result |= (b & 0x1F) << shift;
+        shift += 5;
+      } while (b >= 0x20);
+      int dlng = ((result & 1) != 0 ? ~(result >> 1) : (result >> 1));
+      lng += dlng;
+
+      polylineCoordinates.add(LatLng(lat / 1E5, lng / 1E5));
+    }
+    return polylineCoordinates;
+  }
 
 }

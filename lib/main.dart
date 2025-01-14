@@ -2,38 +2,22 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:stack_food/res/routes/routes.dart';
 import 'package:stack_food/screen/splash_screen.dart';
 
 import 'auth/login_screen.dart';
 import 'controller/loacl_translator_controller.dart';
 import 'controller/translator_controller.dart';
+import 'firebase_options.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
-  if(GetPlatform.isWeb) {
-    await Firebase.initializeApp(options: const FirebaseOptions(
-      apiKey: 'AIzaSyCc3OCd5I2xSlnftZ4bFAbuCzMhgQHLivA',
-      appId: '1:491987943015:android:fe79b69339834d5c8f1ec2',
-      messagingSenderId: '491987943015',
-      projectId: 'stackmart-500c7',
-    ));
-  }else if(GetPlatform.isAndroid) {
-    await Firebase.initializeApp(
-      options: const FirebaseOptions(
-        apiKey: 'AIzaSyCc3OCd5I2xSlnftZ4bFAbuCzMhgQHLivA',
-        appId: '1:491987943015:android:fe79b69339834d5c8f1ec2',
-        messagingSenderId: '491987943015',
-        projectId: 'stackmart-500c7',
-      ),
-    );
-  } else {
-    await Firebase.initializeApp();
-  }
   // Initialize TranslatorController
   Get.put(TranslatorController());
 
@@ -59,7 +43,7 @@ class MyApp extends StatelessWidget {
           fallbackLocale:  const Locale('en'),
           title: 'Stack Food',
           debugShowCheckedModeBanner: false,
-          home: const SplashScreen()
+       getPages: AppRoutes.appRoutes(),
       );
     });
   }
