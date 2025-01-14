@@ -1,10 +1,20 @@
+import 'dart:developer';
+import 'dart:io';
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:stack_food/auth/reg_screen.dart';
+import 'package:stack_food/auth/view_model/login_view_model.dart';
 import 'package:stack_food/navbar/bottom_navbar.dart';
+
+import '../res/routes/routes_name.dart';
+import '../widgets/dialogs.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -14,6 +24,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
+  final loginController = Get.put(LoginViewModel());
+  bool _obscureText = true;
 
   @override
   void initState() {
@@ -58,6 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Center(
             child: SingleChildScrollView(
               child: Form(
+                key: loginController.formKey,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,6 +118,17 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
               
                             ),
+                            controller: loginController.emailController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "email required".tr;
+                              }
+                              final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+                              if (!emailRegex.hasMatch(value)) {
+                                return "Invalid email".tr;
+                              }
+                              return null;
+                            },
                           ),
                         ],
                       ),
@@ -115,10 +140,11 @@ class _LoginScreenState extends State<LoginScreen> {
                         children: [
                            Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Text("password".tr,style: TextStyle(color: Color(0xff9997a2)),),
+                            child: Text("password".tr,style: const TextStyle(color: Color(0xff9997a2)),),
                           ),
               
                           TextFormField(
+                            obscureText: _obscureText,
                             decoration: InputDecoration(
                               hintText: 'password'.tr,
                               filled: true,
@@ -145,8 +171,34 @@ class _LoginScreenState extends State<LoginScreen> {
                                   width: 1.0, // Border width
                                 ),
                               ),
+                                suffixIcon: _obscureText==true?
+                                IconButton(
+                                    onPressed: (){
+                                      setState(() {
+                                        _obscureText=false;
+                                      });
+                                    },
+                                    icon: const Icon(Icons.remove_red_eye_outlined)
+                                ): IconButton(
+                                    onPressed: (){
+                                      setState(() {
+                                        _obscureText=true;
+                                      });
+                                    },
+                                    icon: const Icon(Icons.visibility_off_outlined)
+                                )
               
                             ),
+                            controller: loginController.passwordController,
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return "password required".tr;
+                              }
+                              if (value.length < 6) {
+                                return "password too short".tr;
+                              }
+                              return null;
+                            },
                           ),
                         ],
                       ),
@@ -154,16 +206,14 @@ class _LoginScreenState extends State<LoginScreen> {
               
                      Center(
                         child: Padding(
-                          padding: EdgeInsets.symmetric(vertical: 30),
+                          padding: const EdgeInsets.symmetric(vertical: 30),
                           child: Text("forgot_password".tr,style: TextStyle(color: Color(0xffb80808,),fontSize: 15,),),
                         )
                     ),
               
                     Center(
                       child: ElevatedButton(
-                          onPressed: (){
-                            Get.to(BottomNavBar());
-                          },
+                          onPressed: loginController.login,
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 100),
                           backgroundColor: const Color(0xffb80808)
@@ -207,42 +257,53 @@ class _LoginScreenState extends State<LoginScreen> {
                       ],
                     ),
                     Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 30),
+                      padding:  const EdgeInsets.symmetric(vertical: 30),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 20),
-                            decoration: const BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.all(Radius.circular(30))
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Image.asset("assets/icon/fb.png"),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 8),
-                                  child: Text("FACEBOOK"),
-                                )
-                              ],
-                            ),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 20),
-                            decoration: const BoxDecoration(
+                          InkWell(
+                            onTap: ()async{
+                              final UserCredential user=await signInWithFb();
+                              print(user);
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 20),
+                              decoration: const BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.all(Radius.circular(30))
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Image.asset("assets/icon/fb.png"),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 8),
+                                    child: Text("FACEBOOK"),
+                                  )
+                                ],
+                              ),
                             ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Image.asset("assets/icon/g.png"),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 8),
-                                  child: Text("GOOGLE"),
-                                )
-                              ],
+                          ),
+                          InkWell(
+                            onTap: (){
+                              signInWithGoogle();
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 20),
+                              decoration: const BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.all(Radius.circular(30))
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Image.asset("assets/icon/g.png"),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 8),
+                                    child: Text("GOOGLE"),
+                                  )
+                                ],
+                              ),
                             ),
                           )
                         ],
@@ -258,6 +319,66 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
 
     );
+  }
+
+
+  Future<void> signInWithGoogle() async {
+    try {
+      // Check internet connectivity
+      await InternetAddress.lookup('google.com');
+
+      // Trigger the authentication flow
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      if (googleUser == null) {
+        // The user canceled the sign-in
+        Dialogs.showMsgSnackBar(context,'Sign In',"Sign in aborted by user");
+        return;
+      }else{
+
+        // Obtain the auth details from the request
+        final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+        // Create a new credential
+        final AuthCredential credential = GoogleAuthProvider.credential(
+          accessToken: googleAuth.accessToken,
+          idToken: googleAuth.idToken,
+        );
+
+        // Sign in to Firebase with the Google [UserCredential]
+        final UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+        final User? user = userCredential.user;
+
+        if (user != null) {
+          // If the user is new, you can save additional details to your backend or Firestore
+          bool isNewUser = userCredential.additionalUserInfo?.isNewUser ?? false;
+          if (isNewUser) {
+            // Register the user in your backend if needed
+            String name = user.displayName ?? '';
+            String email = user.email ?? '';
+            String phone = user.uid ?? '';
+
+
+
+
+          } else {
+            log('other');
+            Get.offAndToNamed(RouteName.homeView);
+          }
+        }
+
+      }
+
+
+    } catch (e) {
+      log('\nsignInWithGoogle: given exception $e');
+    }
+  }
+
+  Future<UserCredential> signInWithFb()async{
+    final LoginResult loginResult=await FacebookAuth.instance.login();
+    final OAuthCredential oAuthCredential=FacebookAuthProvider.credential(loginResult.accessToken!.tokenString);
+    return FirebaseAuth.instance.signInWithCredential(oAuthCredential);
   }
 
 

@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:stack_food/auth/login_screen.dart';
+import 'package:stack_food/auth/view_model/reg_view_model.dart';
 
 class RegScreen extends StatefulWidget {
   const RegScreen({super.key});
@@ -13,6 +16,9 @@ class RegScreen extends StatefulWidget {
 }
 
 class _RegScreenState extends State<RegScreen> {
+
+  final regController = Get.put(RegViewModel());
+  bool _obscureText = true;
 
   @override
   void initState() {
@@ -59,6 +65,7 @@ class _RegScreenState extends State<RegScreen> {
               padding: const EdgeInsets.only(top: 200,bottom: 50),
               child: SingleChildScrollView(
                 child: Form(
+                  key: regController.formKey,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,6 +86,7 @@ class _RegScreenState extends State<RegScreen> {
                               child: Text("full_name".tr,style: TextStyle(color: Color(0xff9997a2)),),
                             ),
                             TextFormField(
+                              controller: regController.fullNameController,
                               decoration: InputDecoration(
                                 hintText: 'full_name'.tr,
                                 filled: true,
@@ -107,6 +115,12 @@ class _RegScreenState extends State<RegScreen> {
                                 ),
 
                               ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your full name';
+                                }
+                                return null;
+                              },
                             ),
                           ],
                         ),
@@ -123,6 +137,7 @@ class _RegScreenState extends State<RegScreen> {
                               child: Text("user_name".tr,style: TextStyle(color: Color(0xff9997a2)),),
                             ),
                             TextFormField(
+                              controller: regController.userNameController,
                               decoration: InputDecoration(
                                 hintText: 'user_name'.tr,
                                 filled: true,
@@ -151,6 +166,12 @@ class _RegScreenState extends State<RegScreen> {
                                 ),
 
                               ),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Please enter your username';
+                                }
+                                return null;
+                              },
                             ),
                           ],
                         ),
@@ -166,6 +187,7 @@ class _RegScreenState extends State<RegScreen> {
                               child: Text("email_or_phone".tr,style: TextStyle(color: Color(0xff9997a2)),),
                             ),
                             TextFormField(
+                              controller: regController.emailController,
                               decoration: InputDecoration(
                                 hintText: 'email_or_phone'.tr,
                                 filled: true,
@@ -194,53 +216,23 @@ class _RegScreenState extends State<RegScreen> {
                                 ),
 
                               ),
+                              keyboardType: TextInputType.emailAddress,
+                              autovalidateMode: AutovalidateMode.onUserInteraction,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "email required".tr;
+                                }
+                                final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+                                if (!emailRegex.hasMatch(value)) {
+                                  return "Invalid email".tr;
+                                }
+                                return null;
+                              },
                             ),
                           ],
                         ),
                       ),
-                      //referral code
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                             Padding(
-                              padding: EdgeInsets.all(8.0),
-                              child: Text("${"referral_code".tr} (${"optional".tr})",style: TextStyle(color: Color(0xff9997a2)),),
-                            ),
-                            TextFormField(
-                              decoration: InputDecoration(
-                                hintText: 'referral_code'.tr,
-                                filled: true,
-                                fillColor: Colors.white,
-                                hintStyle: const TextStyle(color: Color(0xffc4c4c4)),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8.0), // Rounded corners
-                                  borderSide: const BorderSide(
-                                    color: Color(0xffeeeeee), // Border color
-                                    width: 1.0, // Border width
-                                  ),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8.0), // Rounded corners
-                                  borderSide: const BorderSide(
-                                    color: Color(0xffeeeeee), // Border color for enabled state
-                                    width: 1.0, // Border width
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8.0), // Rounded corners
-                                  borderSide: const BorderSide(
-                                    color: Color(0xffeeeeee), // Border color for focused state
-                                    width: 1.0, // Border width
-                                  ),
-                                ),
 
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
                       //password
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -253,6 +245,7 @@ class _RegScreenState extends State<RegScreen> {
                             ),
 
                             TextFormField(
+                              obscureText: _obscureText,
                               decoration: InputDecoration(
                                 hintText: 'password'.tr,
                                 filled: true,
@@ -279,8 +272,34 @@ class _RegScreenState extends State<RegScreen> {
                                     width: 1.0, // Border width
                                   ),
                                 ),
+                                  suffixIcon: _obscureText==true?
+                                  IconButton(
+                                      onPressed: (){
+                                        setState(() {
+                                          _obscureText=false;
+                                        });
+                                      },
+                                      icon: const Icon(Icons.remove_red_eye_outlined)
+                                  ): IconButton(
+                                      onPressed: (){
+                                        setState(() {
+                                          _obscureText=true;
+                                        });
+                                      },
+                                      icon: const Icon(Icons.visibility_off_outlined)
+                                  )
 
                               ),
+                              controller: regController.passwordController,
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return "password required".tr;
+                                }
+                                if (value.length < 6) {
+                                  return "password too short".tr;
+                                }
+                                return null;
+                              },
                             ),
                           ],
                         ),
@@ -290,7 +309,7 @@ class _RegScreenState extends State<RegScreen> {
 
                       Center(
                         child: ElevatedButton(
-                          onPressed: (){},
+                          onPressed: regController.registration,
                           style: ElevatedButton.styleFrom(
                               padding: const EdgeInsets.symmetric(vertical: 15,horizontal: 100),
                               backgroundColor: const Color(0xffb80808)
@@ -386,6 +405,7 @@ class _RegScreenState extends State<RegScreen> {
 
     );
   }
+
 
 
 }
